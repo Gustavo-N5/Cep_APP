@@ -30,26 +30,25 @@ class _HomePageState extends State<HomePage> {
         child: SizedBox(
           child: Column(
             children: [
-              BlocBuilder(
+              BlocListener(
                 bloc: cepCubit,
-                builder: (context, state) {
+                listener: (context, state) {
                   if (state is FaluereCepState) {
-                    dialogError(
-                      context,
-                      "Cep Invalido",
-                      "Cep inexistente ou digitado de forma errada, Confira!!!",
-                    );
+                    dialogError(context, "Cep Invalido",
+                        "Cep inexistente ou digitado de forma errada, Confira!!!");
                   }
-                  return const SizedBox(
-                    height: 0,
-                  );
                 },
+                // Lembrar que o blocListener precisa de um child
+                child: Container(),
               ),
               TextFormField(
                 controller: cepEC,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'CEP obrigatorio';
+                  }
+                  if (value.length < 8 && value.isNotEmpty) {
+                    return "Cep precisa no minimo 8 numeros";
                   }
                   return null;
                 },

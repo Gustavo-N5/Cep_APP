@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 dialogError(BuildContext context, String title, String content) {
-  return showDialog(
+  showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
