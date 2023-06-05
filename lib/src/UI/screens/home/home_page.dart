@@ -13,11 +13,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final CepBloc cepCubit;
   final cepEC = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     cepCubit = BlocProvider.of<CepBloc>(context);
+    cepCubit.stream.listen((state) {
+      if (state is FaluereCepState) {
+        dialogError(
+          context,
+          "Cep Invalido",
+          "Cep inexistente ou digitado de forma errada, Confira!!!",
+        );
+      }
+    });
   }
 
   @override
@@ -30,28 +40,20 @@ class _HomePageState extends State<HomePage> {
         child: SizedBox(
           child: Column(
             children: [
-              BlocListener(
-                bloc: cepCubit,
-                listener: (context, state) {
-                  if (state is FaluereCepState) {
-                    dialogError(context, "Cep Invalido",
-                        "Cep inexistente ou digitado de forma errada, Confira!!!");
-                  }
-                },
-                // Lembrar que o blocListener precisa de um child
-                child: Container(),
-              ),
-              TextFormField(
-                controller: cepEC,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'CEP obrigatorio';
-                  }
-                  if (value.length < 8 && value.isNotEmpty) {
-                    return "Cep precisa no minimo 8 numeros";
-                  }
-                  return null;
-                },
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: cepEC,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'CEP obrigatorio';
+                    }
+                    if (value.length < 8 && value.isNotEmpty) {
+                      return "Cep precisa no minimo 8 digitus";
+                    }
+                    return null;
+                  },
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -73,7 +75,10 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    cepCubit.findCep(cep: cepEC.text);
+                    if (_formKey.currentState!.validate()) {
+                      cepCubit.findCep(cep: cepEC.text);
+                      cepEC.clear();
+                    }
                   },
                   child: const Text('Busca Cep')),
               const SizedBox(
