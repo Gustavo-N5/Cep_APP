@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:via_cep/src/models/cep_model.dart';
 
+import '../../models/cep_model.dart';
 import 'cep_repository.dart';
 
 class CepRepositoriesImpl implements CepRepositories {

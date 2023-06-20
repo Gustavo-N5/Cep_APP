@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:via_cep/src/UI/screens/home/home_page.dart';
-import 'package:via_cep/src/UI/screens/login/login_screen.dart';
-import 'package:via_cep/src/data/Cubit/cep_bloc.dart';
+
+import 'UI/screens/home/home_page.dart';
+import 'UI/screens/login/login_screen.dart';
+import 'data/Cubit/cep_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (_) => CepBloc(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(

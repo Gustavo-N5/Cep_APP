@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/src/UI/helper/gradient.dart';
-import 'package:via_cep/src/UI/helper/media_query_help.dart';
+
+import '../../widgets/gradient.dart';
+import '../../helper/media_query_help.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _passord = TextEditingController();
 
@@ -43,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: height(context, 0.01),
                   ),
                   Form(
+                    key: _formKey,
                     child: Column(
                       children: [
                         Padding(
@@ -85,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/home");
+                            Navigator.of(context).pushNamed("/home");
                           },
                         ),
                         SizedBox(
